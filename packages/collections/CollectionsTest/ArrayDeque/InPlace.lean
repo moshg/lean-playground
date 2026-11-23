@@ -1,4 +1,4 @@
-import ArrayDeque
+import Collections
 
 /-!
 Checks that updates on an unshared deque modify its buffer in place, by comparing the buffer's
@@ -9,9 +9,9 @@ hoisted into a shared global constant, and identical pure calls would be merged 
 value, either of which makes a correct implementation look like it copies.
 -/
 
-namespace ArrayDequeTest.InPlace
+namespace CollectionsTest.ArrayDeque.InPlace
 
-open ArrayDeque
+open Collections ArrayDeque
 
 unsafe def bufAddrImpl (d : ArrayDeque Nat) : USize := ptrAddrUnsafe d.buf
 
@@ -75,4 +75,4 @@ def run : IO Bool := do
     unless b do IO.eprintln s!"in-place: {name} copied its buffer"; ok := false
   return ok
 
-end ArrayDequeTest.InPlace
+end CollectionsTest.ArrayDeque.InPlace
