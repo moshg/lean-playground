@@ -1,0 +1,26 @@
+name = "uuid"
+version = "0.1.0"
+description = "RFC 9562 UUIDs (v3/v4/v5/v7/v8) for Lean 4"
+keywords = ["uuid", "rfc9562"]
+defaultTargets = ["UUID", "uuidgen"]
+testDriver = "UUIDTest"
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[lean_lib]]
+name = "UUID"
+leanOptions = { linter.missingDocs = true }
+
+[[lean_exe]]
+name = "uuidgen"
+root = "UUIDGen"
+
+# Tests: `lake test` builds and runs `UUIDTest.lean`, which imports the `UUIDTest.*` modules.
+[[lean_lib]]
+name = "tests"
+globs = ["UUIDTest.+"]
+
+[[lean_exe]]
+name = "UUIDTest"
