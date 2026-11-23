@@ -7,7 +7,7 @@ Lake パッケージで、単体で依存として取り込めます。
 
 | パッケージ | 概要 |
 |---|---|
-| [`uuid`](packages/uuid) | RFC 9562 UUID（v3/v4/v5/v7/v8、単調増加 v7、パース / フォーマット、コンパイル時リテラル、証明付き） |
+| _（まだありません。`scripts/new-package.sh` で追加します）_ | |
 
 ## 必要なもの
 
@@ -19,13 +19,13 @@ Lake パッケージで、単体で依存として取り込めます。
 ## 開発
 
 ```console
-$ cd packages/uuid
+$ cd packages/<name>
 $ lake build          # ビルド
 $ lake test           # テスト
-$ lake exe uuidgen    # パッケージが提供する実行ファイル
+$ lake exe <exe>      # パッケージが提供する実行ファイル
 
 $ scripts/check.sh            # 全パッケージを --wfail（警告もエラー扱い）でビルドしてテスト
-$ scripts/check.sh uuid       # 指定したパッケージだけ
+$ scripts/check.sh <name>     # 指定したパッケージだけ
 ```
 
 エディタは VS Code + [Lean 4 拡張](https://marketplace.visualstudio.com/items?itemName=leanprover.lean4)を推奨。
@@ -72,8 +72,8 @@ scripts/                  check.sh, new-package.sh
 
 ```toml
 [[require]]
-name = "uuid"
+name = "<name>"
 git = "https://github.com/moshg/lean-playground"
 rev = "main"
-subDir = "packages/uuid"
+subDir = "packages/<name>"
 ```

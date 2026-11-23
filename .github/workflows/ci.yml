@@ -31,6 +31,7 @@ jobs:
   build:
     name: ${{ matrix.package }}
     needs: discover
+    if: needs.discover.outputs.packages != '[]'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -51,4 +52,8 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - run: test "${{ needs.build.result }}" = success
+      # `skipped` means there are no packages yet.
+      - run: |
+          result="${{ needs.build.result }}"
+          echo "build: $result"
+          test "$result" = success || test "$result" = skipped

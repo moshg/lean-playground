@@ -22,10 +22,10 @@ Monorepo of independent Lean 4 libraries. See README.md for the human-facing ove
   public def/structure/field/constructor needs a docstring. Theorems and instances don't.
 - Builds must be warning-free (`--wfail`), including unused simp args and deprecations.
 - Keep IO thin: pair every `IO` function with a pure core that takes randomness/time as
-  arguments (e.g. `UUID.v4` / `UUID.v4Of`); test and prove things about the pure core.
+  arguments; test and prove things about the pure core.
 - Do not import `Lean` (the compiler package) from library code, not even via `meta import`:
   every executable that imports the library then links all of Lean (~7 MB → ~120 MB).
-  Write syntax extensions as `macro`s, which only need `Init` (see `UUID/Literal.lean`).
+  Write syntax extensions as `macro`s, which only need `Init`.
 - Tests: `<Lib>Test.lean` is the `testDriver` exe; `<Lib>Test/*.lean` is a `lean_lib` named
   `tests` with `globs = ["<Lib>Test.+"]`. Put pure checks in `#guard` (checked at build time) and
   randomized/IO checks in the runtime suites. Test vectors should come from specs or be
@@ -40,7 +40,7 @@ Monorepo of independent Lean 4 libraries. See README.md for the human-facing ove
 - For literals mixed with shifts, the binop elaborator may pick `Nat`; add `(… : UInt64)`.
 - `Except` has no `DecidableEq`, so `#guard parse s = .error e` fails; compare via `Option`.
 - Derived `Ord` instances were awkward to unfold in proofs; write `Ord` by hand when you need to
-  reason about it (`UUID.lt_iff`).
+  reason about it.
 - `Vector` append indexing doesn't simp well; write vectors as explicit `#v[...]` literals.
 
 ## Toolchain in cloud sessions

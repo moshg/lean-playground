@@ -2,7 +2,7 @@
 # Build (warnings are errors) and test every package, or only the ones named.
 #
 #   scripts/check.sh            # all packages
-#   scripts/check.sh uuid       # just packages/uuid
+#   scripts/check.sh foo        # just packages/foo
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
