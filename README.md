@@ -7,7 +7,7 @@ Lake パッケージで、単体で依存として取り込めます。
 
 | パッケージ | 概要 |
 |---|---|
-| _（まだありません。`scripts/new-package.sh` で追加します）_ | |
+| [array-deque](packages/array-deque) | リングバッファによる両端キュー `ArrayDeque`（償却 O(1) の両端 push/pop、`toList` に対する仕様の証明つき） |
 
 ## 必要なもの
 
