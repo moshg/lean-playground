@@ -45,7 +45,8 @@ relaxedAutoImplicit = false
 name = "$mod"
 leanOptions = { linter.missingDocs = true }
 
-# Tests: \`lake test\` builds and runs \`${mod}Test.lean\`, which imports the \`${mod}Test.*\` modules.
+# Tests: \`lake test\` builds and runs \`${mod}Test.lean\`,
+# which imports the \`${mod}Test.*\` modules.
 [[lean_lib]]
 name = "tests"
 globs = ["${mod}Test.+"]
