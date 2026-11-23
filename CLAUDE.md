@@ -45,8 +45,7 @@ Monorepo of independent Lean 4 libraries. See README.md for the human-facing ove
 
 ## Toolchain in cloud sessions
 
-`release.lean-lang.org` may be blocked by the network policy, which breaks `elan`'s automatic
-install. GitHub release downloads work: fetch
-`https://github.com/leanprover/lean4/releases/download/v<ver>/lean-<ver>-linux.tar.zst`
-(resume with `curl -C -` if the connection drops), extract with `zstd`, then
-`elan toolchain link leanprover--lean4---v<ver> <extracted dir>`.
+The `lean-playground` cloud environment allows `release.lean-lang.org` (toolchain manifests) and
+`releases.lean-lang.org` (archives), and its setup script installs elan plus the pinned toolchain,
+so `lake` works out of the box. In an environment without those hosts, elan's install fails with
+a proxy 403; add both hosts to the environment rather than working around it.
