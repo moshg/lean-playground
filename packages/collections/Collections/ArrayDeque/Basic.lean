@@ -23,6 +23,8 @@ deque linearly to keep it that way: after `let d' := d.pushBack x`, do not use `
 
 universe u v w
 
+namespace Collections
+
 /--
 A double-ended queue backed by a ring buffer.
 
@@ -283,8 +285,10 @@ instance {m : Type v → Type w} [Monad m] : ForIn m (ArrayDeque α) α where
   forIn d b f := forInLoop d f 0 b
 
 instance [Repr α] : Repr (ArrayDeque α) where
-  reprPrec d prec := Repr.addAppParen ("ArrayDeque.ofList " ++ repr d.toList) prec
+  reprPrec d prec := Repr.addAppParen ("Collections.ArrayDeque.ofList " ++ repr d.toList) prec
 
 end ArrayDeque
+
+end Collections
 
 end

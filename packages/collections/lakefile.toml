@@ -1,0 +1,22 @@
+name = "collections"
+version = "0.1.0"
+description = "Data structures with verified specifications"
+defaultTargets = ["Collections"]
+testDriver = "CollectionsTest"
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[lean_lib]]
+name = "Collections"
+leanOptions = { linter.missingDocs = true }
+
+# Tests: `lake test` builds and runs `CollectionsTest.lean`,
+# which imports the `CollectionsTest.*` modules.
+[[lean_lib]]
+name = "tests"
+globs = ["CollectionsTest.+"]
+
+[[lean_exe]]
+name = "CollectionsTest"

@@ -11,6 +11,11 @@ Monorepo of independent Lean 4 libraries. See README.md for the human-facing ove
 - `scripts/check.sh [pkg...]` — `lake build --wfail` + `lake test` for every (or the named) package.
   This is what CI runs; run it before committing.
 - `scripts/new-package.sh <kebab-name> <ModuleName>` — scaffold a new package.
+- One package per domain, split into modules inside. Data structures all live in
+  `packages/collections` as `Collections/<Name>.lean` (+ `Collections/<Name>/*.lean`), in
+  `namespace Collections`, with tests in `CollectionsTest/<Name>/*.lean`; add the import to
+  `Collections.lean` and the test modules to `CollectionsTest.lean`. Scaffold a new package only
+  for a new domain.
 - CI (`.github/workflows/ci.yml`) auto-discovers packages; no edits needed when adding one.
 
 ## Conventions

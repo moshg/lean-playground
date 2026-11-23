@@ -1,13 +1,14 @@
 # lean-playground
 
 Lean 4 でライブラリを実装して遊ぶためのモノレポ。各ライブラリは `packages/` 以下の独立した
-Lake パッケージで、単体で依存として取り込めます。
+Lake パッケージで、単体で依存として取り込めます。パッケージは分野ごとに 1 つで、その中をモジュールで分けます
+（データ構造はすべて `collections`）。
 
 ## パッケージ
 
 | パッケージ | 概要 |
 |---|---|
-| [array-deque](packages/array-deque) | リングバッファによる両端キュー `ArrayDeque`（償却 O(1) の両端 push/pop、`toList` に対する仕様の証明つき） |
+| [collections](packages/collections) | データ構造。リングバッファによる両端キュー `ArrayDeque`（償却 O(1) の両端 push/pop、`toList` に対する仕様の証明つき） |
 
 ## 必要なもの
 
@@ -37,7 +38,8 @@ $ scripts/check.sh <name>     # 指定したパッケージだけ
 $ scripts/new-package.sh base64 Base64
 ```
 
-`packages/base64/` に lakefile・ライブラリ・テスト・README の雛形ができます。CI は `packages/*/lakefile.*`
+`packages/base64/` に lakefile・ライブラリ・テスト・README の雛形ができます。新しいパッケージを作るのは新しい分野の
+ときだけで、データ構造は `packages/collections` に `Collections/<Name>.lean` として足します。CI は `packages/*/lakefile.*`
 を自動検出するので、設定の追加は不要です。上のパッケージ表への追記だけ忘れずに。
 
 ## レイアウト

@@ -1,7 +1,8 @@
 # array-deque 設計（#4）
 
-両端キュー `ArrayDeque` の実装前の設計。パッケージ `packages/array-deque`、モジュール `ArrayDeque`。
-雛形は `scripts/new-package.sh array-deque ArrayDeque` で作る。
+両端キュー `ArrayDeque` の実装前の設計。パッケージ `packages/collections`、モジュール `Collections.ArrayDeque`
+（名前空間 `Collections`）。
+当初は単独のパッケージ `packages/array-deque` だったが、データ構造は `collections` にまとめる方針に変えた。
 
 ## 1. 表現
 
@@ -175,7 +176,7 @@ match d.popFront? with          -- Option (α × ArrayDeque α) だった場合
 | `ofList` [Inh] | `List α → ArrayDeque α` | `l.toArray ++ replicate (capFor n - n) default`、`head = 0`。O(n) |
 | `foldl` | `(β → α → β) → β → ArrayDeque α → β` | 引数順は `Array.foldl` に合わせる |
 | `ForIn m (ArrayDeque α) α` | | 添字のループで書く。`toArray` を経由しない |
-| `Repr` | | `ArrayDeque.ofList [..]` と表示する |
+| `Repr` | | `Collections.ArrayDeque.ofList [..]` と表示する |
 | `grow` [Inh] | `ArrayDeque α → ArrayDeque α` | 内部用だが公開（exposed な定義から参照するため）。docstring を付ける |
 
 issue から変えた点：
@@ -211,7 +212,7 @@ issue から変えた点：
 
 ## 5. 証明
 
-`ArrayDeque/Lemmas.lean`。`sorry` と独自の公理は置かない。
+`Collections/ArrayDeque/Lemmas.lean`。`sorry` と独自の公理は置かない。
 
 基礎となる補題：
 
@@ -285,7 +286,7 @@ push/pop/set の証明は、どれも次の流れになる見込み。
 
 ## 6. テスト
 
-- **`ArrayDequeTest/Basic.lean`（`#guard`）**：
+- **`CollectionsTest/ArrayDeque/Basic.lean`（`#guard`）**：
   - 空：`toList`、`popFront?.1`/`popBack?.1` が `none`、`capacity = 0`。
   - `emptyWithCapacity 0/1/5` の容量がそれぞれ 0/1/8。
   - 折り返し：`emptyWithCapacity 4` に 1,2,3 を `pushBack` し、2 回 `popFront` し、4,5,6 を `pushBack`
@@ -302,7 +303,7 @@ push/pop/set の証明は、どれも次の流れになる見込み。
   - 公理の検査：主要な定理について `#guard_msgs in #print axioms ArrayDeque.toList_pushBack` などを置き、
     標準の公理（`propext`/`Classical.choice`/`Quot.sound` の部分集合）しか使っていないことを固定する。
     - 期待される出力は定理ごとに違い、証明を変えると変わりうる。その場合は出力を更新する。
-- **`ArrayDequeTest/Property.lean`（実行時）**：
+- **`CollectionsTest/ArrayDeque/Property.lean`（実行時）**：
   - 純粋な中核 `checkRandom (seed n : Nat) : Except String Unit` を作る。`mkStdGen seed` と `randNat` で
     操作列（pushBack/pushFront/popFront?/popBack?/set/popFront/popBack）を生成し、`ArrayDeque Nat` と
     `List Nat` のモデルに同じ操作を適用する。
@@ -311,20 +312,21 @@ push/pop/set の証明は、どれも次の流れになる見込み。
   - 成長と縮小の両方を通すため、push 優勢と pop 優勢のフェーズを交互にする。
   - `IO` 側は固定のシード列（再現用）を回すだけ。
   - モデルとの比較ループでも、pop は第 3 節の安全な書き方で書く。
-- **`ArrayDequeTest/InPlace.lean`（実行時）**：第 3 節の一意性テスト（`ptrAddrUnsafe` で比べるもの）。
+- **`CollectionsTest/ArrayDeque/InPlace.lean`（実行時）**：第 3 節の一意性テスト（`ptrAddrUnsafe` で比べるもの）。
 
 ## 7. ファイル構成
 
 ```
-packages/array-deque/
-  ArrayDeque.lean            public import ArrayDeque.Basic, ArrayDeque.Lemmas
-  ArrayDeque/Basic.lean      構造体・physIdx とその範囲の補題・操作・インスタンス
-  ArrayDeque/Lemmas.lean     仕様の定理
-  ArrayDequeTest.lean        テストドライバ
-  ArrayDequeTest/Basic.lean     #guard
-  ArrayDequeTest/Axioms.lean    #guard_msgs in #print axioms
-  ArrayDequeTest/Property.lean  List モデルとのランダム比較（実行時）
-  ArrayDequeTest/InPlace.lean   ptrAddrUnsafe による in-place 検査（実行時）
+packages/collections/
+  Collections.lean                     public import Collections.ArrayDeque
+  Collections/ArrayDeque.lean          public import Collections.ArrayDeque.Basic, .Lemmas
+  Collections/ArrayDeque/Basic.lean    構造体・physIdx とその範囲の補題・操作・インスタンス
+  Collections/ArrayDeque/Lemmas.lean   仕様の定理
+  CollectionsTest.lean                 テストドライバ
+  CollectionsTest/ArrayDeque/Basic.lean     #guard
+  CollectionsTest/ArrayDeque/Axioms.lean    #guard_msgs in #print axioms
+  CollectionsTest/ArrayDeque/Property.lean  List モデルとのランダム比較（実行時）
+  CollectionsTest/ArrayDeque/InPlace.lean   ptrAddrUnsafe による in-place 検査（実行時）
 ```
 
 ## 8. スコープ外

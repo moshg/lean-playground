@@ -1,10 +1,10 @@
-import ArrayDeque
+import Collections
 
 /-! Small, hand-checked cases. Each expected list follows from the List model by hand. -/
 
-namespace ArrayDequeTest.Basic
+namespace CollectionsTest.ArrayDeque.Basic
 
-open ArrayDeque
+open Collections ArrayDeque
 
 -- Empty deque
 #guard (∅ : ArrayDeque Nat).toList = []
@@ -80,6 +80,6 @@ def wrapped : ArrayDeque Nat :=
     acc := x :: acc
   return acc) = [4, 3]
 
-#guard reprStr (ofList [1, 2]) = "ArrayDeque.ofList [1, 2]"
+#guard reprStr (ofList [1, 2]) = "Collections.ArrayDeque.ofList [1, 2]"
 
-end ArrayDequeTest.Basic
+end CollectionsTest.ArrayDeque.Basic

@@ -4,7 +4,7 @@ module
 -- This import is private: downstream modules still cannot see the body.
 import all Init.Data.Nat.Power2.Basic
 
-public import ArrayDeque.Basic
+public import Collections.ArrayDeque.Basic
 
 /-!
 # Specification of `ArrayDeque`
@@ -14,7 +14,7 @@ Every operation is characterized by its effect on the abstract model `toList`.
 
 @[expose] public section
 
-namespace ArrayDeque
+namespace Collections.ArrayDeque
 
 universe u v w
 
@@ -394,6 +394,6 @@ theorem forInLoop_eq {m : Type v → Type w} [Monad m] [LawfulMonad m] {β : Typ
   show forInLoop d f 0 b = _
   rw [forInLoop_eq]; simp
 
-end ArrayDeque
+end Collections.ArrayDeque
 
 end

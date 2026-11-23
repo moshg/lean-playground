@@ -1,13 +1,13 @@
-import ArrayDeque
+import Collections
 
 /-!
 Randomized model test: the same random operation sequence is applied to an `ArrayDeque Nat` and to a
 `List Nat` model, and all observations are compared after every step.
 -/
 
-namespace ArrayDequeTest.Property
+namespace CollectionsTest.ArrayDeque.Property
 
-open ArrayDeque
+open Collections ArrayDeque
 
 /-- One step of the model test. `push` biases the choice towards pushes (growth phase: 60% push,
 30% pop, 10% set) or pops (drain phase: 30% push, 60% pop, 10% set). -/
@@ -77,4 +77,4 @@ def run : IO Bool := do
     | .error e => IO.eprintln s!"property: {e}"; ok := false
   return ok
 
-end ArrayDequeTest.Property
+end CollectionsTest.ArrayDeque.Property
